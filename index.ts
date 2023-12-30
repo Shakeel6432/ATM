@@ -107,6 +107,9 @@ class ATM {
 
 let atm = new ATM();
 
+
+// Create some sample for login to ATM!...
+
 atm.users.set('Shakeel', new User('Shakeel', '6432', 50000));
 atm.users.set('Rizwan', new User('Rizwan', '6754', 50000));
 atm.users.set('James', new User('James', '2580', 50000));
