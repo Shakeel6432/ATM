@@ -38,7 +38,7 @@ class ATM {
             type: 'list',
             name: 'action',
             message: 'Choose an action',
-            choices: ['Check Balance', 'Withdraw', 'Deposit', 'Transaction History', 'Logout'],
+            choices: ['Check Balance', 'Withdraw', 'Transfer Money', 'Mobile Recharge', 'Change Pin', 'Transaction History', 'Logout'],
         });
         switch (transactionChoice.action) {
             case 'Check Balance':
@@ -53,14 +53,46 @@ class ATM {
                 });
                 user.withdraw(withdrawAmount.amount);
                 break;
-            case 'Deposit':
-                let depositAmount = await inquirer.prompt({
+            case 'Transfer Money':
+                let transferInfo = await inquirer.prompt([
+                    {
+                        type: 'input',
+                        name: 'recipientId',
+                        message: 'Enter user recipient Id:',
+                    },
+                    {
+                        type: 'number',
+                        name: 'amount',
+                        message: 'Enter transfer amount:',
+                        validate: (input) => input > 0 || 'Amount must be greater then 0',
+                    },
+                ]);
+                let recifient = this.users.get(transferInfo.recipientId);
+                if (recifient) {
+                    user.transferMoney(recifient, transferInfo.amount);
+                }
+                else {
+                    console.log('Recipient not found.');
+                }
+                ;
+                break;
+            case 'Change Pin':
+                let newPin = await inquirer.prompt({
+                    type: 'password',
+                    name: 'pin',
+                    message: 'Enter your new pin:',
+                    mask: '*'
+                });
+                user.changePin(newPin.pin);
+                break;
+            case 'Mobile Recharge':
+                let rechargeAmount = await inquirer.prompt({
                     type: 'number',
                     name: 'amount',
-                    message: 'Enter deposit amount:',
-                    validate: (input) => input > 0 || 'Amount must be greater then 0',
+                    message: 'Enter mobile recharge amount:',
+                    validate: (input) => input > 0 || 'Amount must be greater then 0.'
                 });
-                user.deposit(depositAmount.amount);
+                user.mobileRecharge(rechargeAmount.amount);
                 break;
             case 'Transaction History':
                 user.showtransactionHistory();
@@ -87,6 +119,7 @@ class ATM {
                 });
                 if (!continueTransaction.continue) {
                     console.log('Logging out...');
+                    break;
                 }
             }
             else {
@@ -97,7 +130,8 @@ class ATM {
 }
 ;
 let atm = new ATM();
-atm.users.set('Shakeel', new User('Shakeel', '6432', 50000));
-atm.users.set('Rizwan', new User('Rizwan', '6754', 50000));
+atm.users.set('Muhammad Shakeel', new User('Shakeel', '6432', 50000));
+atm.users.set('Rizwan Ahmed', new User('Rizwan', '6754', 50000));
 atm.users.set('James', new User('James', '2580', 50000));
+atm.users.set('Naveed Bhai', new User('Naveed', '0708', 50000));
 atm.start();

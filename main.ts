@@ -13,17 +13,38 @@ class User {
     this.transactionHistory = [];
   };
 
-  deposit = (amount: number) => {
-    this.balance += amount;
-    this.transactionHistory.push(`Deposited $${amount}`)
-  };
-
   withdraw = (amount: number) => {
     if (amount > this.balance) {
-      console.log(`Insufficiant funds. Withdrawal cancalled.`);
+      console.log(`Insufficiant funds. Withdrawal cancaled.`);
     } else {
       this.balance -= amount;
       this.transactionHistory.push(`Withdrawn $${amount}`);
+    };
+  };
+
+  transferMoney = (recifient: User, amount: number) => {
+    if (amount > this.balance) {
+      console.log('Insufficiant funds. Transfer canceled.');
+    } else {
+      this.balance -= amount;
+      recifient.balance += amount;
+      this.transactionHistory.push(`Transferred $${amount} to ${recifient.id}`);
+      console.log('Transfer money successful.');
+    };
+  };
+
+  changePin = (newPin: string) => {
+    this.pin = newPin;
+    console.log('Change pin successfully');
+  };
+
+  mobileRecharge = (amount: number) => {
+    if (amount > this.balance) {
+      console.log('Insufficiant funds. Mobile recharge canceled.');
+    } else {
+      this.balance -= amount;
+      this.transactionHistory.push(`Mobile recharge of $${amount}`);
+      console.log('Mobile recharge successful.');
     };
   };
 
