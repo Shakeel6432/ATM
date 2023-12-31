@@ -108,7 +108,7 @@ class ATM {
 
             case 'Logout':
                 console.log('Logging out...');
-                break;
+               break
 
             default:
                 console.log('Invalid choice. Please try again');
@@ -141,11 +141,19 @@ class ATM {
 
 let atm = new ATM();
 
-atm.users.set('Muhammad Shakeel', new User('Shakeel', '6432', 50000));
-atm.users.set('Rizwan Ahmed', new User('Rizwan', '6754', 50000));
+// ATM Account for login
+// userId. Shakeel, Pin. 6432
+// userId. Rizwan, Pin. 6754
+// userId. James, Pin. 2580
+// userId. Naveed, Pin. 7080
+
+atm.users.set('Shakeel', new User('Muhammad Shakeel', '6432', 50000));
+atm.users.set('Rizwan', new User('Rizwan Ahmed', '6754', 50000));
 atm.users.set('James', new User('James', '2580', 50000));
-atm.users.set('Naveed Bhai', new User('Naveed', '0708', 50000));
+atm.users.set('Naveed', new User('Naveed Bhai', '0708', 50000));
 
 atm.start()
+
+
 
 
